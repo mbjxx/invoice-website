@@ -4,16 +4,43 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice Generator</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div id="invoice" style="width: 210mm; height: 297mm; position: relative; font-family: Arial, sans-serif; color: #333;">
+    <h1>Invoice Generator</h1>
+    
+    <!-- Formulir Input untuk Invoice -->
+    <div>
+        <label for="date">Date:</label>
+        <input type="date" id="date" required>
+        
+        <label for="billTo">Bill to:</label>
+        <input type="text" id="billTo" placeholder="Client Name" required>
+        
+        <label for="service">Service:</label>
+        <input type="text" id="service" placeholder="Service Type" required>
+
+        <label for="workHour">Work Hour:</label>
+        <input type="number" id="workHour" placeholder="Work Hour" required>
+
+        <label for="rate">Rate (per hour):</label>
+        <input type="number" id="rate" placeholder="Rate" required>
+
+        <label for="dp">DP:</label>
+        <input type="number" id="dp" placeholder="Down Payment" required>
+        
+        <button onclick="generateInvoice()">Generate Invoice</button>
+    </div>
+
+    <!-- Tampilan Invoice -->
+    <div id="invoice" style="display: none; width: 210mm; height: 297mm; position: relative; font-family: Arial, sans-serif; color: #333;">
         <!-- Background Image -->
         <img src="https://mbjxx.github.io/invoice-website/bg.png" style="position: absolute; width: 100%; height: 100%; opacity: 0.1; top: 0; left: 0; z-index: -1;">
-
+        
         <!-- Invoice Content -->
         <h1 style="text-align: right;">INVOICE</h1>
-        <p><strong>Date:</strong> <span id="invoiceDate">Nov 09, 2024</span></p>
-        <p><strong>Bill to:</strong> <span id="billTo">Putri</span></p>
+        <p><strong>Date:</strong> <span id="invoiceDate"></span></p>
+        <p><strong>Bill to:</strong> <span id="invoiceBillTo"></span></p>
 
         <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
             <thead>
@@ -25,34 +52,21 @@
             </thead>
             <tbody>
                 <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;">Jasa Foto Video (Wedding)</td>
-                    <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">8</td>
-                    <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">Rp 1.400.000</td>
+                    <td style="border: 1px solid #ddd; padding: 8px;" id="invoiceService"></td>
+                    <td style="border: 1px solid #ddd; padding: 8px; text-align: center;" id="invoiceWorkHour"></td>
+                    <td style="border: 1px solid #ddd; padding: 8px; text-align: right;" id="invoiceRate"></td>
                 </tr>
             </tbody>
         </table>
 
-        <p><strong>Subtotal:</strong> Rp 1.400.000</p>
-        <p><strong>DP:</strong> Rp 280.000</p>
-        <p><strong>Sisa:</strong> Rp 1.120.000</p>
+        <p><strong>Subtotal:</strong> Rp <span id="subtotal"></span></p>
+        <p><strong>DP:</strong> Rp <span id="dpAmount"></span></p>
+        <p><strong>Sisa:</strong> Rp <span id="remaining"></span></p>
         <p><strong>Status:</strong> Belum Lunas</p>
-
-        <!-- Payment Instructions -->
-        <div style="margin-top: 20px;">
-            <h3>Payment Instructions</h3>
-            <p>Pay cheque to: I Ketut Lanang</p>
-            <p>Send to bank: 1462397008 BANK BCA</p>
-        </div>
-
-        <!-- Notes -->
-        <div style="margin-top: 20px;">
-            <p>Hasil foto dan video paling lambat dikirim h+7 pelunasan...</p>
-        </div>
+        
+        <button onclick="downloadPDF()">Download PDF</button>
     </div>
 
-    <button onclick="generatePDF()">Download PDF</button>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>
