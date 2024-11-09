@@ -26,22 +26,11 @@ button {
 
 #invoice {
     padding: 20px;
-    position: relative;
+    border: 1px solid #ddd;
     text-align: left;
     color: #333;
-    width: 210mm;
-    height: 297mm;
-    font-family: Arial, sans-serif;
-}
-
-.background {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    opacity: 0.1;
-    top: 0;
-    left: 0;
-    z-index: -1;
+    position: relative;
+    margin-top: 20px;
 }
 
 table {
