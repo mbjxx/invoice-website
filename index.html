@@ -1,51 +1,47 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invoice Generator</title>
+    <title>Generator Invoice</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1>Invoice Generator</h1>
+    <h1>Generator Invoice</h1>
 
-    <!-- Formulir Input untuk Invoice -->
     <div class="form-container">
-        <label for="date">Date:</label>
+        <label for="date">Tanggal:</label>
         <input type="date" id="date" required>
 
-        <label for="billTo">Bill to:</label>
-        <input type="text" id="billTo" placeholder="Client Name" required>
+        <label for="billTo">Ditagihkan Kepada:</label>
+        <input type="text" id="billTo" placeholder="Nama Klien" required>
 
-        <label for="service">Service:</label>
-        <input type="text" id="service" placeholder="Service Type" required>
+        <label for="service">Layanan:</label>
+        <input type="text" id="service" placeholder="Jenis Layanan" required>
 
-        <label for="workHour">Work Hour:</label>
-        <input type="number" id="workHour" placeholder="Work Hour" required>
+        <label for="workHour">Jam Kerja:</label>
+        <input type="number" id="workHour" placeholder="Jam Kerja" required>
 
-        <label for="rate">Rate (per hour):</label>
-        <input type="number" id="rate" placeholder="Rate" required>
+        <label for="rate">Tarif (per jam):</label>
+        <input type="number" id="rate" placeholder="Tarif" required>
 
         <label for="dp">DP:</label>
         <input type="number" id="dp" placeholder="Down Payment" required>
 
-        <button onclick="generateInvoice()">Generate Invoice</button>
+        <button onclick="generateInvoice()">Buat Invoice</button>
     </div>
 
-    <!-- Tampilan Invoice -->
-    <div id="invoice" style="display: none; width: 210mm; height: 297mm; position: relative; font-family: Arial, sans-serif;">
+    <div id="invoice" style="display: none;">
         <img src="images/bg.png" alt="background" class="background">
-        
-        <!-- Konten Invoice -->
         <h2>INVOICE</h2>
-        <p>Date: <span id="invoiceDate"></span></p>
-        <p>Bill to: <span id="invoiceBillTo"></span></p>
+        <p>Tanggal: <span id="invoiceDate"></span></p>
+        <p>Ditagihkan Kepada: <span id="invoiceBillTo"></span></p>
 
         <table>
             <tr>
-                <th>Service</th>
-                <th>Work hour</th>
-                <th>Rate</th>
+                <th>Layanan</th>
+                <th>Jam Kerja</th>
+                <th>Tarif</th>
                 <th>Subtotal</th>
             </tr>
             <tr>
@@ -60,7 +56,7 @@
         <p>Sisa: Rp <span id="remainingAmount"></span></p>
         <p>Status: Belum Lunas</p>
 
-        <button onclick="downloadPDF()">Download PDF</button>
+        <button onclick="downloadPDF()">Unduh PDF</button>
     </div>
 
     <script src="script.js"></script>
