@@ -4,109 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Invoice Generator</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-        }
-        .container {
-            max-width: 500px;
-            padding: 20px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        label {
-            display: block;
-            margin: 10px 0 5px;
-        }
-        input, button {
-            width: 100%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        button {
-            background-color: #4CAF50;
-            color: white;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-    </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Buat Invoice</h1>
-        <form id="invoiceForm">
-            <label for="name">Bill to:</label>
-            <input type="text" id="name" required>
+    <div id="invoice" style="width: 210mm; height: 297mm; position: relative; font-family: Arial, sans-serif; color: #333;">
+        <!-- Background Image -->
+        <img src="https://mbjxx.github.io/invoice-website/bg.png" style="position: absolute; width: 100%; height: 100%; opacity: 0.1; top: 0; left: 0; z-index: -1;">
 
-            <label for="date">Date:</label>
-            <input type="date" id="date" required>
+        <!-- Invoice Content -->
+        <h1 style="text-align: right;">INVOICE</h1>
+        <p><strong>Date:</strong> <span id="invoiceDate">Nov 09, 2024</span></p>
+        <p><strong>Bill to:</strong> <span id="billTo">Putri</span></p>
 
-            <label for="service">Service:</label>
-            <input type="text" id="service" value="Jasa Foto Video (Wedding)" required>
+        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
+            <thead>
+                <tr>
+                    <th style="border: 1px solid #ddd; padding: 8px; background-color: #f4f4f4;">Service</th>
+                    <th style="border: 1px solid #ddd; padding: 8px; background-color: #f4f4f4;">Work hour</th>
+                    <th style="border: 1px solid #ddd; padding: 8px; background-color: #f4f4f4;">Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td style="border: 1px solid #ddd; padding: 8px;">Jasa Foto Video (Wedding)</td>
+                    <td style="border: 1px solid #ddd; padding: 8px; text-align: center;">8</td>
+                    <td style="border: 1px solid #ddd; padding: 8px; text-align: right;">Rp 1.400.000</td>
+                </tr>
+            </tbody>
+        </table>
 
-            <label for="hours">Work Hour:</label>
-            <input type="number" id="hours" value="8" required>
+        <p><strong>Subtotal:</strong> Rp 1.400.000</p>
+        <p><strong>DP:</strong> Rp 280.000</p>
+        <p><strong>Sisa:</strong> Rp 1.120.000</p>
+        <p><strong>Status:</strong> Belum Lunas</p>
 
-            <label for="rate">Rate per Hour:</label>
-            <input type="number" id="rate" value="1400000" required>
+        <!-- Payment Instructions -->
+        <div style="margin-top: 20px;">
+            <h3>Payment Instructions</h3>
+            <p>Pay cheque to: I Ketut Lanang</p>
+            <p>Send to bank: 1462397008 BANK BCA</p>
+        </div>
 
-            <label for="dp">DP:</label>
-            <input type="number" id="dp" value="280000" required>
-
-            <button type="button" onclick="generatePDF()">Generate PDF</button>
-        </form>
+        <!-- Notes -->
+        <div style="margin-top: 20px;">
+            <p>Hasil foto dan video paling lambat dikirim h+7 pelunasan...</p>
+        </div>
     </div>
 
-    <!-- Pustaka jsPDF -->
+    <button onclick="generatePDF()">Download PDF</button>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <script>
-        function generatePDF() {
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF();
-
-            // Ambil nilai dari form
-            const name = document.getElementById('name').value;
-            const date = document.getElementById('date').value;
-            const service = document.getElementById('service').value;
-            const hours = document.getElementById('hours').value;
-            const rate = document.getElementById('rate').value;
-            const dp = document.getElementById('dp').value;
-
-            const subtotal = hours * rate;
-            const remaining = subtotal - dp;
-
-            // Teks Invoice
-            doc.setFontSize(12);
-            doc.text("INVOICE", 10, 10);
-            doc.text(`Bill to: ${name}`, 10, 20);
-            doc.text(`Date: ${date}`, 10, 30);
-
-            doc.text("Service:", 10, 40);
-            doc.text(service, 10, 50);
-            doc.text(`Work Hour: ${hours}`, 10, 60);
-            doc.text(`Rate per Hour: Rp ${rate}`, 10, 70);
-
-            doc.text(`Subtotal: Rp ${subtotal}`, 10, 90);
-            doc.text(`DP: Rp ${dp}`, 10, 100);
-            doc.text(`Balance Due: Rp ${remaining}`, 10, 110);
-
-            // Simpan sebagai PDF
-            doc.save("invoice.pdf");
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
