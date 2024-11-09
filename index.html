@@ -8,15 +8,15 @@
 </head>
 <body>
     <h1>Invoice Generator</h1>
-    
+
     <!-- Formulir Input untuk Invoice -->
-    <div>
+    <div class="form-container">
         <label for="date">Date:</label>
         <input type="date" id="date" required>
-        
+
         <label for="billTo">Bill to:</label>
         <input type="text" id="billTo" placeholder="Client Name" required>
-        
+
         <label for="service">Service:</label>
         <input type="text" id="service" placeholder="Service Type" required>
 
@@ -28,42 +28,38 @@
 
         <label for="dp">DP:</label>
         <input type="number" id="dp" placeholder="Down Payment" required>
-        
+
         <button onclick="generateInvoice()">Generate Invoice</button>
     </div>
 
     <!-- Tampilan Invoice -->
-    <div id="invoice" style="display: none; width: 210mm; height: 297mm; position: relative; font-family: Arial, sans-serif; color: #333;">
-        <!-- Background Image -->
-        <img src="https://mbjxx.github.io/invoice-website/bg.png" style="position: absolute; width: 100%; height: 100%; opacity: 0.1; top: 0; left: 0; z-index: -1;">
+    <div id="invoice" style="display: none; width: 210mm; height: 297mm; position: relative; font-family: Arial, sans-serif;">
+        <img src="images/bg.png" alt="background" class="background">
         
-        <!-- Invoice Content -->
-        <h1 style="text-align: right;">INVOICE</h1>
-        <p><strong>Date:</strong> <span id="invoiceDate"></span></p>
-        <p><strong>Bill to:</strong> <span id="invoiceBillTo"></span></p>
+        <!-- Konten Invoice -->
+        <h2>INVOICE</h2>
+        <p>Date: <span id="invoiceDate"></span></p>
+        <p>Bill to: <span id="invoiceBillTo"></span></p>
 
-        <table style="width: 100%; border-collapse: collapse; margin-top: 20px;">
-            <thead>
-                <tr>
-                    <th style="border: 1px solid #ddd; padding: 8px; background-color: #f4f4f4;">Service</th>
-                    <th style="border: 1px solid #ddd; padding: 8px; background-color: #f4f4f4;">Work hour</th>
-                    <th style="border: 1px solid #ddd; padding: 8px; background-color: #f4f4f4;">Rate</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td style="border: 1px solid #ddd; padding: 8px;" id="invoiceService"></td>
-                    <td style="border: 1px solid #ddd; padding: 8px; text-align: center;" id="invoiceWorkHour"></td>
-                    <td style="border: 1px solid #ddd; padding: 8px; text-align: right;" id="invoiceRate"></td>
-                </tr>
-            </tbody>
+        <table>
+            <tr>
+                <th>Service</th>
+                <th>Work hour</th>
+                <th>Rate</th>
+                <th>Subtotal</th>
+            </tr>
+            <tr>
+                <td><span id="invoiceService"></span></td>
+                <td><span id="invoiceWorkHour"></span></td>
+                <td>Rp <span id="invoiceRate"></span></td>
+                <td>Rp <span id="invoiceSubtotal"></span></td>
+            </tr>
         </table>
 
-        <p><strong>Subtotal:</strong> Rp <span id="subtotal"></span></p>
-        <p><strong>DP:</strong> Rp <span id="dpAmount"></span></p>
-        <p><strong>Sisa:</strong> Rp <span id="remaining"></span></p>
-        <p><strong>Status:</strong> Belum Lunas</p>
-        
+        <p>DP: Rp <span id="dpAmount"></span></p>
+        <p>Sisa: Rp <span id="remainingAmount"></span></p>
+        <p>Status: Belum Lunas</p>
+
         <button onclick="downloadPDF()">Download PDF</button>
     </div>
 
