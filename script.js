@@ -26,18 +26,20 @@ function generateInvoice() {
 
 // Function to download invoice as PDF
 function downloadPDF() {
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF('p', 'mm', 'a4');
     const invoiceElement = document.getElementById("invoice");
-    const billToName = document.getElementById("billTo").value;
+    const billToName = document.getElementById("billTo").value || "Client";
 
-    doc.html(invoiceElement, {
-        callback: function (doc) {
-            doc.save(`Invoice_${billToName}.pdf`);
-        },
-        x: 10,
-        y: 10,
-        width: 190,
-        windowWidth: invoiceElement.scrollWidth,
+    html2canvas(invoiceElement).then(canvas => {
+        const imgData = canvas.toDataURL("image/png");
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF("p", "mm", "a4");
+
+        const imgWidth = 190;
+        const pageHeight = 297;
+        const imgHeight = (canvas.height * imgWidth) / canvas.width;
+        const position = 10;
+
+        pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
+        pdf.save(`Invoice_${billToName}.pdf`);
     });
 }
