@@ -1,4 +1,4 @@
-// Fungsi untuk menghitung subtotal dan sisa pembayaran, lalu menampilkan invoice
+// Function to generate invoice
 function generateInvoice() {
     const date = document.getElementById("date").value;
     const billTo = document.getElementById("billTo").value;
@@ -10,7 +10,7 @@ function generateInvoice() {
     const subtotal = workHour * rate;
     const remaining = subtotal - dp;
 
-    // Menampilkan data pada template invoice
+    // Fill invoice template with data
     document.getElementById("invoiceDate").innerText = date;
     document.getElementById("invoiceBillTo").innerText = billTo;
     document.getElementById("invoiceService").innerText = service;
@@ -20,23 +20,24 @@ function generateInvoice() {
     document.getElementById("dpAmount").innerText = dp.toLocaleString();
     document.getElementById("remainingAmount").innerText = remaining.toLocaleString();
 
-    // Menampilkan invoice
+    // Display invoice
     document.getElementById("invoice").style.display = "block";
 }
 
-// Fungsi untuk mengunduh invoice sebagai PDF
+// Function to download invoice as PDF
 function downloadPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF('p', 'mm', 'a4');
     const invoiceElement = document.getElementById("invoice");
+    const billToName = document.getElementById("billTo").value;
 
     doc.html(invoiceElement, {
         callback: function (doc) {
-            doc.save("invoice.pdf");
+            doc.save(`Invoice_${billToName}.pdf`);
         },
         x: 10,
         y: 10,
-        width: 190, // Lebar area dalam mm
+        width: 190,
         windowWidth: invoiceElement.scrollWidth,
     });
 }
