@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            max-width: 500px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin: 10px 0 5px;
+        }
+        input, button {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        button {
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Buat Invoice</h1>
+        <form id="invoiceForm">
+            <label for="name">Bill to:</label>
+            <input type="text" id="name" required>
+
+            <label for="date">Date:</label>
+            <input type="date" id="date" required>
+
+            <label for="service">Service:</label>
+            <input type="text" id="service" value="Jasa Foto Video (Wedding)" required>
+
+            <label for="hours">Work Hour:</label>
+            <input type="number" id="hours" value="8" required>
+
+            <label for="rate">Rate per Hour:</label>
+            <input type="number" id="rate" value="1400000" required>
+
+            <label for="dp">DP:</label>
+            <input type="number" id="dp" value="280000" required>
+
+            <button type="button" onclick="generatePDF()">Generate PDF</button>
+        </form>
+    </div>
+
+    <!-- Pustaka jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Ambil nilai dari form
+            const name = document.getElementById('name').value;
+            const date = document.getElementById('date').value;
+            const service = document.getElementById('service').value;
+            const hours = document.getElementById('hours').value;
+            const rate = document.getElementById('rate').value;
+            const dp = document.getElementById('dp').value;
+
+            const subtotal = hours * rate;
+            const remaining = subtotal - dp;
+
+            // Teks Invoice
+            doc.setFontSize(12);
+            doc.text("INVOICE", 10, 10);
+            doc.text(`Bill to: ${name}`, 10, 20);
+            doc.text(`Date: ${date}`, 10, 30);
+
+            doc.text("Service:", 10, 40);
+            doc.text(service, 10, 50);
+            doc.text(`Work Hour: ${hours}`, 10, 60);
+            doc.text(`Rate per Hour: Rp ${rate}`, 10, 70);
+
+            doc.text(`Subtotal: Rp ${subtotal}`, 10, 90);
+            doc.text(`DP: Rp ${dp}`, 10, 100);
+            doc.text(`Balance Due: Rp ${remaining}`, 10, 110);
+
+            // Simpan sebagai PDF
+            doc.save("invoice.pdf");
+        }
+    </script>
+</body>
+</html>
