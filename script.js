@@ -26,6 +26,10 @@ function generateInvoice() {
 document.getElementById("downloadBtn").addEventListener("click", function () {
     const invoiceElement = document.getElementById("invoice");
     const billToName = document.getElementById("billTo").value || "Client";
+    const downloadButton = document.getElementById("downloadBtn");
+
+    // Hide the download button before capturing the PDF
+    downloadButton.style.display = "none";
 
     html2canvas(invoiceElement, { scale: 2 }).then(canvas => {
         const imgData = canvas.toDataURL("image/png");
@@ -39,5 +43,8 @@ document.getElementById("downloadBtn").addEventListener("click", function () {
 
         pdf.addImage(imgData, "PNG", 10, position, imgWidth, imgHeight);
         pdf.save(`Invoice_${billToName}.pdf`);
+
+        // Show the download button again after the PDF is saved
+        downloadButton.style.display = "block";
     });
 });
